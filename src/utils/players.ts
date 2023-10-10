@@ -17,6 +17,7 @@ export const updatePlayers = async (players: TodayPlayer[]) => {
   // } catch (error) {
   //   alert(`Error Update Players : ${error}`);
   // }
+  return players;
 };
 
 export const getSortedPlayersByFirstName = (data: TodayPlayer[] | Player[]) =>

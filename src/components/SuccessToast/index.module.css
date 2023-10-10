@@ -1,0 +1,6 @@
+.success {
+  text-align: center;
+  color: var(--success-background);
+  border-radius: 5px;
+  border: 1px solid var(--success-border);
+}
