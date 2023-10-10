@@ -1,13 +1,16 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Layout } from "@/src/components/Layout";
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body>
-        <Main />
-        <NextScript />
+      <body className="bg-gray-900 text-white">
+        <Layout>
+          <Main />
+          <NextScript />
+        </Layout>
       </body>
     </Html>
-  )
+  );
 }
