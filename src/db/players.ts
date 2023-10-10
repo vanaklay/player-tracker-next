@@ -1,6 +1,7 @@
 // import { Player } from "../types/players";
 import { Player } from "@prisma/client";
 import { prisma } from "./prisma";
+import { getTodayDate } from "../utils/date";
 
 export const getPlayers = async () => {
   try {
@@ -16,9 +17,23 @@ export const getPlayers = async () => {
   }
 };
 
-export const getTodayPLayers = async () => {
-  const players = await getPlayers();
-  return;
+export const getTodayPlayers = async () => {
+  try {
+    const players = await getPlayers();
+    if (!players) {
+      throw new Error("Error on fetching TodayPlayers");
+    }
+    return players.map((player) => {
+      return {
+        id: player.id,
+        firstName: player.firstName,
+        lastName: player.lastName,
+        attendance: player.daysAttendance[getTodayDate()] || false,
+      };
+    });
+  } catch (error) {
+    alert(error);
+  }
 };
 
 type DaysAttendance = {

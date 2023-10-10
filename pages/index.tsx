@@ -1,13 +1,27 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import { Layout } from "@/src/components/Layout";
+import { getTodayPlayers } from "@/src/db/players";
+import { TodayPlayer } from "@/src/types/players";
+import TodayPlayers from "@/src/features/TodayPlayers";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export async function getServerSideProps() {
+  const todayPlayers = await getTodayPlayers();
+  return {
+    props: { todayPlayers },
+  };
+}
+
+export default function Home({
+  todayPlayers,
+}: {
+  todayPlayers: TodayPlayer[];
+}) {
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    ></main>
+    >
+      <TodayPlayers players={todayPlayers} />
+    </main>
   );
 }

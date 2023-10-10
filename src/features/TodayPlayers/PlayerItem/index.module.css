@@ -1,0 +1,22 @@
+.player-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 2rem;
+  width: 100%;
+  padding: 8px 0px 8px 8px;
+  border-radius: 8px;
+  border: 1px solid whitesmoke;
+}
+
+.player-item p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.player-item.checked {
+  background-color: var(--success-background);
+  border-color: var(--success-border);
+  box-shadow: 0 1px 0.5em var(--succes-box-shadow);
+  color: #242424;
+}
