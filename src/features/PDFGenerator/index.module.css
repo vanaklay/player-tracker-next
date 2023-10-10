@@ -1,0 +1,9 @@
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.downloadButton {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
