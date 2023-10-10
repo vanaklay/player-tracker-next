@@ -1,7 +1,7 @@
-// import { Player } from "../types/players";
 import { Player } from "@prisma/client";
 import { prisma } from "./prisma";
 import { getTodayDate } from "../utils/date";
+import { TodayPlayer } from "../types/players";
 
 export const getPlayers = async () => {
   try {
@@ -42,6 +42,7 @@ type DaysAttendance = {
   isPresent: boolean;
   playerId: string;
 }[];
+
 export const getPlayerDaysAttendance = (
   daysAttendance: DaysAttendance,
   player: Player
@@ -56,7 +57,35 @@ export const getPlayerDaysAttendance = (
 export const updatePlayerAttendance = async (
   id: string,
   attendance: boolean
-) => {};
+) => {
+  try {
+    console.log("player -> updatedPlayerAttendance", id, attendance);
+    const player = await prisma.player.findUnique({ where: { id } });
+    console.log("player", player);
+  } catch (error) {
+    alert(`Error updatePlayerAttendance : ${error}`);
+  }
+};
+
+export const updatePlayers = async (players: TodayPlayer[]) => {
+  if (players.length === 0) throw new Error("Players is undefined !");
+  try {
+    return await Promise.all(
+      players.map(async (player) => {
+        // const updatedPlayer = await updatePlayerAttendance(
+        //   player.id,
+        //   player.attendance
+        // );
+        // return updatedPlayer;
+
+        return player;
+      })
+    );
+  } catch (error) {
+    alert(`Error Update Players : ${error}`);
+  }
+  return players;
+};
 
 export const addPlayerOnDatabase = async (
   firstName: string,

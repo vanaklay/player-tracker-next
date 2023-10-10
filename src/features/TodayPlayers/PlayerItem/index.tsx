@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import styles from "./index.module.css";
 import { TodayPlayer, UpdatedAttendancePlayer } from "../../../types/players";
 
 type PlayerItemProps = TodayPlayer & {
@@ -17,11 +16,16 @@ const PlayerItem = ({
   };
   return (
     <div
-      className={clsx(styles["player-item"], { [styles.checked]: attendance })}
+      className={clsx(
+        "flex border border-white border-solid rounded space-x-2 p-2",
+        {
+          "border-green-500 bg-green-500 text-black": attendance,
+        }
+      )}
       onClick={toggleAttendance}
     >
-      <p>{firstName}</p>
-      <p>{lastName}</p>
+      <p className="m-0 text-base">{firstName}</p>
+      <p className="m-0 text-base">{lastName}</p>
     </div>
   );
 };
