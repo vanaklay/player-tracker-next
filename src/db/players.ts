@@ -54,33 +54,16 @@ export const getPlayerDaysAttendance = (
     return acc;
   }, {});
 
-export const updatePlayerAttendance = async (
-  id: string,
-  attendance: boolean
-) => {
-  try {
-    console.log("player -> updatedPlayerAttendance", id, attendance);
-    const player = await prisma.player.findUnique({ where: { id } });
-    console.log("player", player);
-  } catch (error) {
-    alert(`Error updatePlayerAttendance : ${error}`);
-  }
-};
-
 export const updatePlayers = async (players: TodayPlayer[]) => {
   if (players.length === 0) throw new Error("Players is undefined !");
   try {
-    return await Promise.all(
-      players.map(async (player) => {
-        // const updatedPlayer = await updatePlayerAttendance(
-        //   player.id,
-        //   player.attendance
-        // );
-        // return updatedPlayer;
-
-        return player;
-      })
-    );
+    fetch("/api/players", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(players),
+    }).then((res) => res.json());
   } catch (error) {
     alert(`Error Update Players : ${error}`);
   }
