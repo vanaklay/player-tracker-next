@@ -1,6 +1,6 @@
 // import { updatePlayerAttendance } from "../db/players";
-import { Player, TodayPlayer } from "../types/players";
-import { getTodayDate } from "./date";
+import { Player, TodayPlayer } from '../types/players';
+import { getTodayDate } from './date';
 
 export const getSortedPlayersByFirstName = (data: TodayPlayer[] | Player[]) =>
   [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
@@ -14,3 +14,8 @@ export const getTodayPlayers = (data: Player[]) =>
       attendance: player.daysAttendance[getTodayDate()] || false,
     };
   });
+
+export const countPlayers = (players: TodayPlayer[]) =>
+  players.reduce((acc: number, player) => {
+    return player.attendance ? acc + 1 : acc;
+  }, 0);

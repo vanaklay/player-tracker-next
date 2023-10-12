@@ -1,20 +1,17 @@
-import { FormEvent, useState } from "react";
-import { formatDate, getTodayDate } from "../../utils/date";
-import Submit from "../../components/Submit";
-import Spinner from "../../components/Spinner";
-import SuccessToast from "../../components/SuccessToast";
-import {
-  Player,
-  TodayPlayer,
-  UpdatedAttendancePlayer,
-} from "../../types/players";
-import PlayerItem from "./PlayerItem";
-import { getSortedPlayersByFirstName } from "@/src/utils/players";
-import { updatePlayers } from "@/src/db/players";
+import { FormEvent, useState } from 'react';
+import { formatDate, getTodayDate } from '../../utils/date';
+import Submit from '../../components/Submit';
+import Spinner from '../../components/Spinner';
+import SuccessToast from '../../components/SuccessToast';
+import { Player, TodayPlayer, UpdatedAttendancePlayer } from '../../types/players';
+import PlayerItem from './PlayerItem';
+import { countPlayers, getSortedPlayersByFirstName } from '@/src/utils/players';
+import { updatePlayers } from '@/src/db/players';
 
 const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
   const [todayPlayers, setTodayPlayers] = useState(players);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [playerCount, setPlayerCount] = useState(countPlayers(players));
 
   if (!players || players.length === 0)
     return (
@@ -23,9 +20,7 @@ const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
       </div>
     );
 
-  const sortedPlayers = getSortedPlayersByFirstName(
-    todayPlayers
-  ) as TodayPlayer[];
+  const sortedPlayers = getSortedPlayersByFirstName(todayPlayers) as TodayPlayer[];
 
   const today = getTodayDate();
   const handlePlayerChange = ({ id, attendance }: UpdatedAttendancePlayer) => {
@@ -34,6 +29,8 @@ const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
       if (player.id === id) return { ...player, attendance };
       return player;
     });
+    const count = countPlayers(updateTodayPlayers);
+    setPlayerCount(count);
     setTodayPlayers(updateTodayPlayers);
   };
 
@@ -50,10 +47,13 @@ const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
 
   return (
     <div className="flex min-w-full flex-col p-4">
-      <h2 className="mb-2">Liste des joueurs présents</h2>
-      <h3 className="mb-2">Le {formatDate(today)}</h3>
+      <h2 className="mb-2 text-center">Liste des joueurs présents</h2>
+      <h3 className="mb-2 flex justify-between">
+        <span>Le {formatDate(today)}</span>
+        <span>Joueurs : {playerCount}</span>
+      </h3>
       <form
-        className="flex flex-col w-4/5 self-center space-y-2"
+        className="flex w-4/5 flex-col space-y-2 self-center"
         onSubmit={handleSubmit}
       >
         {sortedPlayers.map((player) => (

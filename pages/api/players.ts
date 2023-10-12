@@ -5,8 +5,11 @@ import { z } from 'zod';
 import { getTodayDate } from '@/src/utils/date';
 
 type Data = {
-  name: string;
-};
+  lastName: string;
+  firstName: string;
+  id: string;
+  attendance: boolean;
+}[];
 
 const TodayPlayersScheme = z.array(
   z.object({
@@ -54,6 +57,6 @@ export default async function handler(
         });
       }
     }
-    res.status(200).json({ name: 'John Doe' });
+    res.status(200).json(safeData);
   }
 }
