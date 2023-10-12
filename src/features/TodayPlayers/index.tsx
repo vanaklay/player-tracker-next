@@ -2,15 +2,14 @@ import { FormEvent, useState } from 'react';
 import { formatDate, getTodayDate } from '../../utils/date';
 import Submit from '../../components/Submit';
 import Spinner from '../../components/Spinner';
-import SuccessToast from '../../components/SuccessToast';
-import { Player, TodayPlayer, UpdatedAttendancePlayer } from '../../types/players';
+import { TodayPlayer, UpdatedAttendancePlayer } from '../../types/players';
 import PlayerItem from './PlayerItem';
 import { countPlayers, getSortedPlayersByFirstName } from '@/src/utils/players';
 import { updatePlayers } from '@/src/db/players';
+import toast, { Toaster } from 'react-hot-toast';
 
 const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
   const [todayPlayers, setTodayPlayers] = useState(players);
-  const [showSuccess, setShowSuccess] = useState(false);
   const [playerCount, setPlayerCount] = useState(countPlayers(players));
 
   if (!players || players.length === 0)
@@ -37,11 +36,11 @@ const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const updatedPlayers = await updatePlayers(todayPlayers);
+    console.log('updatedPlayers', updatedPlayers);
     if (updatedPlayers) {
-      setShowSuccess(true);
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 3000);
+      toast.success('Présence sauvegarder');
+    } else {
+      toast.error('Erreur');
     }
   };
 
@@ -68,7 +67,6 @@ const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
         ))}
         <Submit inputValue="Valider" size="small" />
       </form>
-      {showSuccess && <SuccessToast message="Sauvegarder" />}
     </div>
   );
 };

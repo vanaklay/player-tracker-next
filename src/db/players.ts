@@ -1,7 +1,7 @@
-import { Player } from "@prisma/client";
-import { prisma } from "./prisma";
-import { getTodayDate } from "../utils/date";
-import { TodayPlayer } from "../types/players";
+import { Player } from '@prisma/client';
+import { prisma } from './prisma';
+import { getTodayDate } from '../utils/date';
+import { TodayPlayer } from '../types/players';
 
 export const getPlayers = async () => {
   try {
@@ -21,7 +21,7 @@ export const getTodayPlayers = async () => {
   try {
     const players = await getPlayers();
     if (!players) {
-      throw new Error("Error on fetching TodayPlayers");
+      throw new Error('Error on fetching TodayPlayers');
     }
     return players.map((player) => {
       return {
@@ -55,23 +55,40 @@ export const getPlayerDaysAttendance = (
   }, {});
 
 export const updatePlayers = async (players: TodayPlayer[]) => {
-  if (players.length === 0) throw new Error("Players is undefined !");
+  if (players.length === 0) throw new Error('Players is undefined !');
   try {
-    fetch("/api/players", {
-      method: "POST",
+    fetch('/api/players', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(players),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((data) => data);
   } catch (error) {
     alert(`Error Update Players : ${error}`);
   }
   return players;
 };
 
-export const addPlayerOnDatabase = async (
-  firstName: string,
-  lastName: string,
-  daysAttendance = {}
-) => {};
+export const addPlayerOnDatabase = async (firstName: string, lastName: string) => {
+  if (firstName.trim().length === 0 || lastName.trim().length === 0)
+    throw new Error('Players is undefined !');
+  const player = {
+    firstName,
+    lastName,
+  };
+  try {
+    const data = await fetch('/api/player', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(player),
+    }).then((res) => res.json());
+    return data;
+  } catch (error) {
+    alert(`Error Update Players : ${error}`);
+  }
+};
