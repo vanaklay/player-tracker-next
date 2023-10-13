@@ -6,7 +6,7 @@ import React, { PropsWithChildren } from 'react';
 type ButtonProps = {
   size?: 'small' | 'large';
 } & PropsWithChildren;
-export const Button = ({ children, size = 'small' }: ButtonProps) => {
+const Button = ({ children, size = 'small' }: ButtonProps) => {
   return (
     <button
       className={clsx('mt-4 self-center rounded border bg-blue-950 p-2', {
@@ -18,3 +18,5 @@ export const Button = ({ children, size = 'small' }: ButtonProps) => {
     </button>
   );
 };
+
+export default Button;

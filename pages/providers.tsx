@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient();
 
-export const Providers = ({ children }: PropsWithChildren) => {
+const Providers = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
@@ -14,3 +14,5 @@ export const Providers = ({ children }: PropsWithChildren) => {
     </QueryClientProvider>
   );
 };
+
+export default Providers;

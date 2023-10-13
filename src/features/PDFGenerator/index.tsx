@@ -8,7 +8,7 @@ import { getSortedPlayersByFirstName } from '../../utils/players';
 import { useFetchPlayersQuery } from '@/src/lib/query/queries';
 import toast from 'react-hot-toast';
 import { getYear } from '@/src/utils/date';
-import { Button } from '@/src/components/Button';
+import Button from '@/src/components/Button';
 
 const PDFGenerator = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>('');

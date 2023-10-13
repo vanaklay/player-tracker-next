@@ -1,13 +1,13 @@
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from 'react';
 
 type LayoutProps = PropsWithChildren & {
   title: string;
 };
-export const Layout = ({ children, title }: LayoutProps) => {
+const Layout = ({ children, title }: LayoutProps) => {
   return (
     <div className="m-auto flex min-h-full max-w-lg flex-col">
       <h1
-        className={`my-4 text-2xl font-semibold text-center underline underline-offset-8`}
+        className={`my-4 text-center text-2xl font-semibold underline underline-offset-8`}
       >
         {title}
       </h1>
@@ -15,3 +15,5 @@ export const Layout = ({ children, title }: LayoutProps) => {
     </div>
   );
 };
+
+export default Layout;
