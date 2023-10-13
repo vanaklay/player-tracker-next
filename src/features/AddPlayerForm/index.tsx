@@ -1,9 +1,11 @@
+'use client';
+
 import { FormEvent } from 'react';
 import Submit from '../../components/Submit';
 import { addPlayerOnDatabase } from '../../db/players';
 import toast from 'react-hot-toast';
 
-const AddForm = (): JSX.Element => {
+const AddPlayerForm = (): JSX.Element => {
   const addPlayer = async (firstName: string, lastName: string) => {
     const player = await addPlayerOnDatabase(firstName, lastName);
     if (player) {
@@ -66,4 +68,4 @@ const AddForm = (): JSX.Element => {
   );
 };
 
-export default AddForm;
+export default AddPlayerForm;
