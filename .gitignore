@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-prisma/db/output.json
+/prisma/db/output.json
