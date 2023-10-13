@@ -12,10 +12,8 @@ export async function getServerSideProps() {
 
 export default function Home({ todayPlayers }: { todayPlayers: TodayPlayer[] }) {
   return (
-    <Providers>
-      <main className={`mb-8 flex min-h-screen flex-col items-center`}>
-        <TodayPlayers players={todayPlayers} />
-      </main>
-    </Providers>
+    <main className={`mb-8 flex min-h-screen flex-col items-center`}>
+      <TodayPlayers players={todayPlayers} />
+    </main>
   );
 }
