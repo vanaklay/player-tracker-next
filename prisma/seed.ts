@@ -1,45 +1,51 @@
-import { faker } from '@faker-js/faker';
+import { Player } from '@/src/types/players';
 import { PrismaClient } from '@prisma/client';
-import { format } from 'path';
+import fs from 'fs/promises';
+import path from 'path';
+import { Player as PlayerDb } from '@prisma/client';
+
+export const getFile = async () => {
+  try {
+    const databaseFile = path.join(process.cwd(), process.env.DATABASE_SEED ?? '');
+    const json = await fs.readFile(databaseFile, 'utf-8');
+    return JSON.parse(json);
+  } catch (error) {}
+};
 
 const prisma = new PrismaClient();
 
 const main = async () => {
-  const playersPromises = [];
-  for (let i = 0; i < 10; i++) {
-    const player = {
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      image: faker.image.avatar(),
-      phone: faker.phone.number(),
-      birthdate: faker.date.birthdate().toISOString().slice(0, 10),
-    };
-    playersPromises.push(
-      prisma.player.create({
-        data: player,
-      })
-    );
-  }
+  const data = await getFile();
+  const playersPromises = data.map((player: Player) => {
+    return prisma.player.create({
+      data: {
+        firstName: player.firstName.trim(),
+        lastName: player.lastName.trim(),
+      },
+    });
+  });
 
   const players = await Promise.all(playersPromises);
-
-  const attendanceRecords = [];
-  for (let i = 10; i < 20; i++) {
-    const today = `2023-09-${i}`;
-    for (const player of players) {
-      const attendance = {
-        date: today,
-        isPresent: Math.random() < 0.5,
-        playerId: player.id,
-      };
-      attendanceRecords.push(
-        prisma.attendance.create({
-          data: attendance,
-        })
-      );
-    }
-  }
-
+  const attendanceRecords = data.flatMap((player: Player) => {
+    const daysAttendances = Object.keys(player.daysAttendance);
+    const firstName = player.firstName.trim();
+    const lastName = player.lastName.trim();
+    const playerOnDb = players.find(
+      (player: PlayerDb) =>
+        player.firstName === firstName && player.lastName === lastName
+    );
+    if (!playerOnDb) return;
+    const playersAttendancesPromises = daysAttendances.map((date) => {
+      return prisma.attendance.create({
+        data: {
+          date: date,
+          isPresent: player.daysAttendance[date],
+          playerId: playerOnDb.id,
+        },
+      });
+    });
+    return playersAttendancesPromises;
+  });
   await Promise.all(attendanceRecords);
 };
 
