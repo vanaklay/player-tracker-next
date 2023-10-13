@@ -5,8 +5,8 @@ export type Player = {
   id: string;
 };
 
-export type TodayPlayer = Omit<Player, "daysAttendance"> & {
+export type TodayPlayer = Omit<Player, 'daysAttendance'> & {
   attendance: boolean;
 };
 
-export type UpdatedAttendancePlayer = Pick<TodayPlayer, "attendance" | "id">;
+export type UpdatedAttendancePlayer = Pick<TodayPlayer, 'attendance' | 'id'>;

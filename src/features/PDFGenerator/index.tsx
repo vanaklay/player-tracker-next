@@ -1,40 +1,31 @@
-import { useEffect, useState } from "react";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import PDFDocument from "./PDFDocument";
-import Spinner from "../../components/Spinner";
-import styles from "./index.module.css";
-import MonthSelector from "./MonthSelector";
-import { Player } from "../../types/players";
-import { getPlayers } from "../../db/players";
-import { getSortedPlayersByFirstName } from "../../utils/players";
+import { useState } from 'react';
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import PDFDocument from './PDFDocument';
+import Spinner from '../../components/Spinner';
+import styles from './index.module.css';
+import MonthSelector from './MonthSelector';
+import { Player } from '../../types/players';
+import { getSortedPlayersByFirstName } from '../../utils/players';
+import { useFetchPlayersQuery } from '@/src/lib/query/queries';
+import toast from 'react-hot-toast';
 
 const PDFGenerator = () => {
-  const [selectedMonth, setSelectedMonth] = useState<string>("");
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [selectedMonth, setSelectedMonth] = useState<string>('');
+  const { data, isLoading, isError } = useFetchPlayersQuery();
 
-  useEffect(() => {
-    const getPlayersMap = async () => {
-      try {
-        const playersData = await getPlayers();
-        if (!playersData) return;
-        const sortedPlayers = getSortedPlayersByFirstName(playersData);
-        setPlayers(sortedPlayers as Player[]);
-      } catch (error) {
-        alert(`Fetch players error with ${error}`);
-      }
-    };
-
-    return () => {
-      getPlayersMap();
-    };
-  }, []);
-
-  if (!players || players.length === 0)
+  if (isLoading)
     return (
       <div className="centered-spinner">
         <Spinner />
       </div>
     );
+
+  if (isError) {
+    toast.error('Pas de joueurs disponible');
+    return;
+  }
+
+  const players = getSortedPlayersByFirstName(data as Player[]) as Player[];
 
   return (
     <>
@@ -54,7 +45,7 @@ const PDFGenerator = () => {
           >
             {({ loading }) => (
               <button className={styles.downloadButton}>
-                {loading ? "Chargement" : "Télécharger"}
+                {loading ? 'Chargement' : 'Télécharger'}
               </button>
             )}
           </PDFDownloadLink>

@@ -1,7 +1,6 @@
 import { getTodayPlayers } from '@/src/db/players';
 import { TodayPlayer } from '@/src/types/players';
 import TodayPlayers from '@/src/features/TodayPlayers';
-import { Providers } from './providers';
 
 export async function getServerSideProps() {
   const todayPlayers = await getTodayPlayers();

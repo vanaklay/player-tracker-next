@@ -2,6 +2,8 @@ import { Player } from '@prisma/client';
 import { prisma } from './prisma';
 import { getTodayDate } from '../utils/date';
 import { TodayPlayer } from '../types/players';
+import toast from 'react-hot-toast';
+import { DaysAttendance } from '../types/attendances';
 
 export const getPlayers = async () => {
   try {
@@ -12,8 +14,8 @@ export const getPlayers = async () => {
       return { ...player, daysAttendance: playerAttendances };
     });
     return filledPlayers;
-  } catch (error) {
-    alert(error);
+  } catch {
+    toast.error('Error on getPlayers');
   }
 };
 
@@ -32,16 +34,9 @@ export const getTodayPlayers = async () => {
       };
     });
   } catch (error) {
-    alert(error);
+    toast.error(`${error}`);
   }
 };
-
-type DaysAttendance = {
-  id: number;
-  date: string;
-  isPresent: boolean;
-  playerId: string;
-}[];
 
 export const getPlayerDaysAttendance = (
   daysAttendance: DaysAttendance,
@@ -79,6 +74,7 @@ export const addPlayerOnDatabase = async (firstName: string, lastName: string) =
     firstName,
     lastName,
   };
+
   try {
     const data = await fetch('/api/player', {
       method: 'POST',
@@ -89,6 +85,6 @@ export const addPlayerOnDatabase = async (firstName: string, lastName: string) =
     }).then((res) => res.json());
     return data;
   } catch (error) {
-    alert(`Error Update Players : ${error}`);
+    toast.error(`Error add player : ${error}`);
   }
 };
