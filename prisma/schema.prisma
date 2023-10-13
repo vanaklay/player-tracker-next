@@ -14,13 +14,16 @@ model Player {
   id             String   @id @default(cuid())
   firstName      String
   lastName       String
+  image          String?
+  phone          String?
+  birthdate      String?
   attendance     Attendance[]
 }
 
 model Attendance {
-  id         Int      @id @default(autoincrement()) @map("id")
-  date       String
-  isPresent  Boolean
-  playerId     String
-  player       Player     @relation(fields: [playerId], references: [id])
+  id            Int      @id @default(autoincrement()) @map("id")
+  date          String
+  isPresent     Boolean
+  playerId      String
+  player        Player     @relation(fields: [playerId], references: [id])
 }

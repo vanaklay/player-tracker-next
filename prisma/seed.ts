@@ -1,5 +1,6 @@
-import { faker } from "@faker-js/faker";
-import { PrismaClient } from "@prisma/client";
+import { faker } from '@faker-js/faker';
+import { PrismaClient } from '@prisma/client';
+import { format } from 'path';
 
 const prisma = new PrismaClient();
 
@@ -9,6 +10,9 @@ const main = async () => {
     const player = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
+      image: faker.image.avatar(),
+      phone: faker.phone.number(),
+      birthdate: faker.date.birthdate().toISOString().slice(0, 10),
     };
     playersPromises.push(
       prisma.player.create({
