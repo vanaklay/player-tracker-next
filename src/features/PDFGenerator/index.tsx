@@ -8,6 +8,7 @@ import { getSortedPlayersByFirstName } from '../../utils/players';
 import { useFetchPlayersQuery } from '@/src/lib/query/queries';
 import toast from 'react-hot-toast';
 import { getYear } from '@/src/utils/date';
+import { Button } from '@/src/components/Button';
 
 const PDFGenerator = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
@@ -45,9 +46,7 @@ const PDFGenerator = () => {
             fileName={`${selectedMonth}_${year}.pdf`}
           >
             {({ loading }) => (
-              <button className="my-8 rounded bg-blue-950 p-2">
-                {loading ? 'Chargement' : 'Télécharger'}
-              </button>
+              <Button>{loading ? 'Chargement' : 'Télécharger'}</Button>
             )}
           </PDFDownloadLink>
         </div>

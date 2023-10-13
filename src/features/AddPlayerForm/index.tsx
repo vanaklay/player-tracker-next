@@ -43,7 +43,7 @@ const AddPlayerForm = (): JSX.Element => {
 
   return (
     <>
-      <form className="mt-8 flex w-4/5 flex-col space-y-2" onSubmit={handleAddForm}>
+      <form className="mt-8 flex flex-col space-y-2 px-4" onSubmit={handleAddForm}>
         <label htmlFor="firstName" className="flex justify-between">
           <span className="mr-4 self-center text-white">Prénom :</span>
           <input
