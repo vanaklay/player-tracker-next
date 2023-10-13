@@ -1,49 +1,44 @@
-import { Text, View, StyleSheet } from "@react-pdf/renderer";
-import { Player } from "../../../types/players";
-import {
-  MONTH,
-  generateDate,
-  getDate,
-  getDatesByMonth,
-} from "../../../utils/date";
+import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Player } from '../../../types/players';
+import { MONTH, generateDate, getDate, getDatesByMonth } from '../../../utils/date';
 
 const styles = StyleSheet.create({
   header: {
     marginBottom: 10,
-    textAlign: "center",
+    textAlign: 'center',
   },
   table: {
-    width: "auto",
-    borderCollapse: "collapse",
+    width: 'auto',
+    borderCollapse: 'collapse',
     marginBottom: 10,
   },
   tableRow: {
-    marginLeft: "10px",
-    flexDirection: "row",
+    marginLeft: '10px',
+    flexDirection: 'row',
   },
   tableCell: {
     borderWidth: 1,
-    borderColor: "#000",
+    borderColor: '#000',
     padding: 8,
-    width: "45px",
-    alignSelf: "center",
-    fontSize: "8px",
+    width: '45px',
+    alignSelf: 'center',
+    fontSize: '8px',
   },
   playerTableCell: {
     borderWidth: 1,
-    borderColor: "#000",
+    borderColor: '#000',
     padding: 8,
-    width: "120px",
-    fontSize: "8px",
+    width: '120px',
+    fontSize: '8px',
   },
   present: {
-    color: "green",
+    color: 'green',
   },
   notPresent: {
-    color: "red",
+    color: 'red',
   },
   center: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
 });
 
@@ -107,10 +102,7 @@ const AttendanceTable = ({ data, month }: AttendanceTableProps) => {
             <Text>Totaux</Text>
           </View>
           {total.map((number) => (
-            <View
-              key={`${Date.now() + Math.random()}`}
-              style={styles.tableCell}
-            >
+            <View key={`${Date.now() + Math.random()}`} style={styles.tableCell}>
               <Text style={styles.center}>{number}</Text>
             </View>
           ))}

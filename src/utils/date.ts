@@ -41,4 +41,6 @@ export const generateDate = (inputDate: string) => {
 };
 
 export const getDatesByMonth = (dates: string[], month: string) =>
-  dates.filter((date) => date.split('-')[1] === month);
+  dates
+    .filter((date) => date.split('-')[1] === month)
+    .sort((a, b) => a.localeCompare(b));
