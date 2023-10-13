@@ -6,7 +6,7 @@ import { TodayPlayer, UpdatedAttendancePlayer } from '../../types/players';
 import PlayerItem from './PlayerItem';
 import { countPlayers, getSortedPlayersByFirstName } from '@/src/utils/players';
 import { updatePlayers } from '@/src/db/players';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
   const [todayPlayers, setTodayPlayers] = useState(players);
@@ -65,7 +65,7 @@ const TodayPlayers = ({ players }: { players: TodayPlayer[] }): JSX.Element => {
             id={player.id}
           />
         ))}
-        <Submit inputValue="Valider" size="small" />
+        {Boolean(playerCount) && <Submit inputValue="Valider" size="small" />}
       </form>
     </div>
   );
