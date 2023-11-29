@@ -4,6 +4,7 @@ import { FormEvent } from 'react';
 import Submit from '../../components/Submit';
 import { addPlayerOnDatabase } from '../../db/players';
 import toast from 'react-hot-toast';
+import { InputWithLabel } from '@/src/components/InputWithLabel';
 
 const AddPlayerForm = (): JSX.Element => {
   const addPlayer = async (firstName: string, lastName: string) => {
@@ -19,8 +20,8 @@ const AddPlayerForm = (): JSX.Element => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
 
-    const firstNameInput = form.querySelector("input[name='firstName']");
-    const lastNameInput = form.querySelector("input[name='lastName']");
+    const firstNameInput = form.querySelector("input[id='firstName']");
+    const lastNameInput = form.querySelector("input[id='lastName']");
 
     if (
       !(firstNameInput instanceof HTMLInputElement) ||
@@ -44,23 +45,8 @@ const AddPlayerForm = (): JSX.Element => {
   return (
     <>
       <form className="mt-8 flex flex-col space-y-2 px-4" onSubmit={handleAddForm}>
-        <label htmlFor="firstName" className="flex justify-between">
-          <span className="mr-4 self-center text-white">Prénom :</span>
-          <input
-            type="text"
-            name="firstName"
-            className="rounded px-4 py-2 text-black"
-          />
-        </label>
-
-        <label htmlFor="lastName" className="flex justify-between">
-          <span className="mr-4 self-center text-white">Nom :</span>
-          <input
-            type="text"
-            name="lastName"
-            className="rounded px-4 py-2 text-black"
-          />
-        </label>
+        <InputWithLabel label="Prénom" id="firstName" type="text" />
+        <InputWithLabel label="Nom" id="lastName" type="text" />
 
         <Submit inputValue="Ajouter" size="small" />
       </form>
