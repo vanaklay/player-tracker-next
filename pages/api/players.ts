@@ -47,7 +47,24 @@ export default apiHandler({
     },
     DELETE: async (req, res) => {
       const body = req.body;
-      console.log('body --> ', body);
+      const playersToDeletePromises = body.map((id: string) => {
+        const deleteAttendances = prisma.attendance.deleteMany({
+          where: {
+            playerId: id,
+          },
+        });
+
+        const deletePlayer = prisma.player.delete({
+          where: {
+            id: id,
+          },
+        });
+
+        return prisma.$transaction([deleteAttendances, deletePlayer]);
+      });
+
+      await Promise.all(playersToDeletePromises);
+      res.status(200).json('ok');
     },
   },
 });
