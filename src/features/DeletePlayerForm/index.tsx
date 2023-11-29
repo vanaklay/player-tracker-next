@@ -20,6 +20,7 @@ import { Player } from '@prisma/client';
 import { RemoveConfig } from '@/src/lib/config';
 import { deletePlayerOnDatabase } from '@/src/db/players';
 import { useState } from 'react';
+import { getSortedPlayersByFirstName } from '@/src/utils/players';
 
 const displayFormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -33,6 +34,7 @@ type DeletePlayerFormProps = {
   players: Player[];
 };
 export function DeletePlayerForm({ players }: DeletePlayerFormProps) {
+  const [playersToRemove, setPlayersToRemove] = useState(players);
   const form = useForm<DisplayFormValues>({
     resolver: zodResolver(displayFormSchema),
   });
@@ -47,8 +49,15 @@ export function DeletePlayerForm({ players }: DeletePlayerFormProps) {
   };
 
   const onSubmit = async (data: DisplayFormValues) => {
-    await deletePlayers(data.items);
+    const players = data.items;
+    await deletePlayers(players);
+    const restPLayers = playersToRemove.filter(
+      (player) => !players.includes(player.id)
+    );
+    setPlayersToRemove(restPLayers);
   };
+
+  const sortedPlayers = getSortedPlayersByFirstName(playersToRemove);
 
   return (
     <Form {...form}>
@@ -62,7 +71,7 @@ export function DeletePlayerForm({ players }: DeletePlayerFormProps) {
                 <FormLabel className="text-base">{RemoveConfig.label}</FormLabel>
                 <FormDescription>{RemoveConfig.description}</FormDescription>
               </div>
-              {players.map((item) => (
+              {sortedPlayers.map((item) => (
                 <FormField
                   key={item.id}
                   control={form.control}

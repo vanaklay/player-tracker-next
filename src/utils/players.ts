@@ -1,9 +1,11 @@
 // import { updatePlayerAttendance } from "../db/players";
 import { Player, TodayPlayer } from '../types/players';
 import { getTodayDate } from './date';
+import { Player as PrismaPlayer } from '@prisma/client';
 
-export const getSortedPlayersByFirstName = (data: TodayPlayer[] | Player[]) =>
-  [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
+export const getSortedPlayersByFirstName = (
+  data: TodayPlayer[] | Player[] | PrismaPlayer[]
+) => [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
 
 export const getTodayPlayers = (data: Player[]) =>
   data.map((player) => {
