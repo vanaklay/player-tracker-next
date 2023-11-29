@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import { TodayPlayer, UpdatedAttendancePlayer } from "../../../types/players";
+import clsx from 'clsx';
+import { TodayPlayer, UpdatedAttendancePlayer } from '../../../types/players';
 
 type PlayerItemProps = TodayPlayer & {
   handlePlayerChange: ({ id, attendance }: UpdatedAttendancePlayer) => void;
@@ -16,12 +16,9 @@ const PlayerItem = ({
   };
   return (
     <div
-      className={clsx(
-        "flex border border-white border-solid rounded space-x-2 p-2",
-        {
-          "border-green-500 bg-green-500 text-black": attendance,
-        }
-      )}
+      className={clsx('flex space-x-2 rounded border  border-solid p-2', {
+        'border-green-500 bg-green-500 text-black': attendance,
+      })}
       onClick={toggleAttendance}
     >
       <p className="m-0 text-base">{firstName}</p>
