@@ -1,5 +1,4 @@
 import { prisma } from '@/src/db/prisma';
-import { z } from 'zod';
 import { getTodayDate } from '@/src/utils/date';
 import { apiHandler } from '@/src/lib/api/apiHandler';
 import { getPlayers } from '@/src/db/players';
@@ -45,6 +44,10 @@ export default apiHandler({
     GET: async (req, res) => {
       const players = await getPlayers();
       res.status(200).json(players);
+    },
+    DELETE: async (req, res) => {
+      const body = req.body;
+      console.log('body --> ', body);
     },
   },
 });

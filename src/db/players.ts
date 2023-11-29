@@ -97,3 +97,21 @@ export const addPlayerOnDatabase = async (firstName: string, lastName: string) =
     toast.error(`Error add player : ${error}`);
   }
 };
+
+export const deletePlayerOnDatabase = async (players: string[]) => {
+  if (players.length === 0) throw new Error('Players is undefined !');
+  try {
+    fetch('/api/players', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(players),
+    })
+      .then((res) => res.json())
+      .then((data) => data);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
