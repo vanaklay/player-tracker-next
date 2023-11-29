@@ -13,6 +13,10 @@ const Navbar = () => {
       url: '/addPlayer',
     },
     {
+      text: 'Supprimer',
+      url: '/deletePlayer',
+    },
+    {
       text: 'Télécharger',
       url: '/pdf',
     },

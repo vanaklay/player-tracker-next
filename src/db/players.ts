@@ -5,6 +5,15 @@ import { TodayPlayer } from '../types/players';
 import toast from 'react-hot-toast';
 import { DaysAttendance } from '../types/attendances';
 
+export const findPlayers = async () => {
+  try {
+    const players = await prisma.player.findMany();
+    return players;
+  } catch (error) {
+    toast.error('Error on findPlayers');
+  }
+};
+
 export const getPlayers = async () => {
   try {
     const players = await prisma.player.findMany();
