@@ -9,10 +9,13 @@ type ButtonProps = {
 const Button = ({ children, size = 'small' }: ButtonProps) => {
   return (
     <button
-      className={clsx('mt-4 self-center rounded border bg-blue-950 p-2', {
-        'w-1/2': size === 'small',
-        'w-9/12': size === 'large',
-      })}
+      className={clsx(
+        'mt-4 self-center rounded border bg-secondary p-2 text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        {
+          'w-1/2': size === 'small',
+          'w-9/12': size === 'large',
+        }
+      )}
     >
       {children}
     </button>

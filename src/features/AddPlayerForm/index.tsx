@@ -29,7 +29,7 @@ const AddPlayerForm = (): JSX.Element => {
       firstNameInput.value.trim().length === 0 ||
       lastNameInput.value.trim().length === 0
     ) {
-      toast.error('Invalid inputs !');
+      toast.error('Il manque des informations !');
       return;
     }
 
